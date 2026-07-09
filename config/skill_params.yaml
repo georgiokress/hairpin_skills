@@ -1,0 +1,69 @@
+global:
+  setznest_nuten: 48
+  plaetze_pro_nut: 8
+  pin_pitch_nuten: 5
+  wicklungsringe_scope: [1, 2, 3]
+
+s0_greifen:
+  gripper_close_force: 1.0
+  pin_pickup_pose: [0, 0, 0, 0, 0, 0]
+
+s1_rotate:
+  rotation_angle_y: 0.524
+  v_rotation: 0.3
+
+s2_approach:
+  approach_pose_offset_xy: [0.0, 0.0]
+  approach_height_z: 0.030
+  v_cartesian: 0.050
+  a_cartesian: 0.250
+
+s3_touchdown:
+  v_descend: 0.005
+  F_threshold_contact: 5.0
+  max_descent_z: 0.040
+
+s4_sliding:
+  F_z_setpoint: 10.0
+  v_xy: 0.010
+  slide_distance_max: 0.025
+  K_xy_compliance: 800.0
+  F_xy_jump_threshold: 8.0
+
+s5_chamfer_a:
+  F_z_setpoint: 10.0
+  v_z_descend: 0.003
+  K_xy_compliance: 300.0
+  chamfer_engagement_z_threshold: 0.003
+  F_xy_peak_limit: 25.0
+
+s6_insert_a:
+  F_z_insertion: 15.0
+  v_z_insertion: 0.005
+  K_xy_compliance: 400.0
+  target_z_depth: 0.010
+
+s7_push_radial:
+  F_radial_setpoint: 12.0
+  v_radial: 0.008
+  F_radial_limit: 25.0
+  radial_distance_max: 0.015
+  F_z_hold_during_push: 5.0
+
+s8_rotate_back:
+  rotation_angle_back: -0.524
+  v_rotation_back: 0.15
+  F_z_hold: 5.0
+  max_torque_limit: 2.0
+
+s9_vertical_set:
+  F_z_set: 40.0
+  v_z_set: 0.003
+  K_xy_compliance_set: 1500.0
+  target_z_final: 0.028
+  F_z_plateau_termination: 50.0
+  plateau_duration_min: 0.3
+
+s10_release:
+  retract_height: 0.050
+  v_retract: 0.050
