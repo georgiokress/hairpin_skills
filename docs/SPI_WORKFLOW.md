@@ -207,13 +207,3 @@ Fehlerterm und 1 N / 2.2461 mm/s mit Fehlergewicht 1. Diese Werte sind
 Modellkandidaten; eine reale Ausführung benötigt weiterhin den vollständigen
 Freigabe- und Aufnahmeablauf aus `ROBOT_OPERATION.md`.
 
-## 8. Reproduzierbarkeit berichten
-
-Für jeden Lauf sind mindestens zu sichern:
-
-- Git-Commit dieses Repositories;
-- `protocol_*.json` und Quellcodehashes;
-- HDF5-, Membership- und Checkpoint-SHA-256;
-- Python- und Paketversionen;
-- Ergebnisordner der CV, des Refits und der Inversion;
-- die Information, dass keine Testdaten zur Modellauswahl verwendet wurden.
