@@ -1,0 +1,51 @@
+{
+  "schema_version": "phase_b_spi_geometric_ground_truth_v1",
+  "ground_truth_id": "rgt_caliper_v1",
+  "created_at_utc": "2026-08-26T06:06:40Z",
+  "status": "nominal_value_frozen_uncertainty_pending",
+  "method": "manual_caliper_measurement",
+  "measurand": "distance from nominal sliding start to geometric chamfer start along +x_R",
+  "frames": {
+    "sliding_frame": "sliding_frame",
+    "nominal_slide_start_x_R_m": 0.0,
+    "slide_direction": "+x_R"
+  },
+  "result": {
+    "nominal_relative_r_gt_m": 0.00925,
+    "nominal_absolute_edge_x_R_m": 0.00925,
+    "caliper_resolution_m": 0.00005,
+    "resolution_standard_uncertainty_m": 0.000014433756729740645,
+    "resolution_only_expanded_uncertainty_k2_m": 0.00002886751345948129,
+    "combined_standard_uncertainty_m": null,
+    "expanded_uncertainty_k2_m": null
+  },
+  "repetitions": {
+    "performed": true,
+    "count": null,
+    "individual_values_m": null,
+    "range_m": null,
+    "repeatability_standard_deviation_m": null
+  },
+  "run_specific_definition": {
+    "formula": "r_GT_run = nominal_absolute_edge_x_R_m - actual_slide_start_x_R_m",
+    "required_run_field": "actual_slide_start_x_R_m"
+  },
+  "independence": {
+    "derived_from_position_detector": false,
+    "derived_from_force_transient": false,
+    "eligible_as_detector_ground_truth": true
+  },
+  "secondary_pilot_plausibility_only": {
+    "internal_force_marker_x_R_m": 0.00924924991499648,
+    "ati_force_marker_x_R_m": 0.009304580789728677,
+    "tcp_z_drop_0p1mm_x_R_m": 0.00979384850895693,
+    "tcp_z_drop_delay_relative_to_r_gt_m": 0.0005438485089569301,
+    "note": "Pilot signal markers are not used to fit or alter r_GT."
+  },
+  "limitations": [
+    "The nominal value is frozen, but the total measurement uncertainty is not yet quantified.",
+    "The reported repetitions were not supplied as individual values or a range.",
+    "Resolution-only uncertainty excludes alignment, contact, datum and repeatability contributions.",
+    "The measurement must be repeated after changes to fixture, Hairpin, tool, TCP or sliding_frame."
+  ]
+}

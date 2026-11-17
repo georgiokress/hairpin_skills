@@ -39,8 +39,16 @@ setup(
             'force_mode_isolated_auto = hairpin_skills.force_mode_isolated_auto:main',
             'sliding_frame_force_test = hairpin_skills.sliding_frame_force_test:main',
             'radial_sliding_test = hairpin_skills.radial_sliding_test:main',
+            'phase_b_spi_data_collection = hairpin_skills.phase_b_spi_data_collection:main',
+            'force_hold_screening = hairpin_skills.force_hold_screening:main',
             'radial_sliding_chamfer_observer = hairpin_skills.radial_sliding_chamfer_observer:main',
-
+            'phase_a_radial_ik_validator = hairpin_skills.phase_a_radial_ik_validator:main',
+            'phase_b_flat_reference = hairpin_skills.phase_b_flat_reference:main',
+            'phase_b_force_source_diagnostic = hairpin_skills.phase_b_force_source_diagnostic:main',
+            'phase_b_ati_velocity = hairpin_skills.phase_b_ati_velocity:main',
+            'phase_c_chamfer_scan = hairpin_skills.phase_c_chamfer_scan:main',
+            'ati_rdt_wrench = hairpin_skills.ati_rdt_wrench:main',
+            'ati_netft_tcp_wrench = hairpin_skills.ati_netft_tcp_wrench:main',
         ],
     },
 )

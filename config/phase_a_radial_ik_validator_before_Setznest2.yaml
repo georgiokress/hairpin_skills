@@ -1,0 +1,54 @@
+phase_a_radial_ik_validator:
+  ros__parameters:
+    sliding_frame: sliding_frame
+    tcp_frame: tool0_controller
+
+    # Kalibrierte Startpose des bisherigen 3-mm-Skills
+    start_x_m: 0.0
+    start_y_m: 0.0
+    start_z_m: 0.002
+    start_qx: 0.056396
+    start_qy: 0.030219
+    start_qz: 0.280641
+    start_qw: 0.957678
+    start_joints:
+      - 1.4617331663714808
+      - -1.1869505506804963
+      - 0.8272621631622314
+      - -1.889268537560934
+      - -1.536943260823385
+      - -0.22527915636171514
+    move_to_start_duration_s: 4.0
+
+    waypoint_yaml_file: /home/georgio/masterarbeit/radial_ik_waypoints.yaml
+
+    # Zuerst NUR Wegpunkt 1 = 2.5 mm.
+    # Erst nach gültiger Auswertung schrittweise auf 2, 3, 4, 5 erhöhen.
+    max_waypoint_index: 1
+    radial_speed_mps: 0.001
+
+    start_position_tolerance_m: 0.001
+    start_orientation_tolerance_rad: 0.0523598776
+
+    endpoint_radial_tolerance_m: 0.0005
+    cross_axis_tolerance_m: 0.0005
+    orientation_tolerance_rad: 0.0523598776
+    monotonic_noise_tolerance_m: 0.00010
+
+    # Online-Abbruchgrenzen
+    abort_cross_axis_m: 0.0015
+    abort_orientation_rad: 0.1047197551
+    abort_radial_undershoot_m: 0.0005
+    abort_radial_overshoot_m: 0.0010
+    tf_timeout_s: 5.0
+    sample_period_s: 0.02
+
+    return_to_start_after_success: true
+    pause_before_return_s: 0.5
+
+    result_root: /home/georgio/masterarbeit/results/phase_a
+    run_name: phase_a_ik_wp01
+
+    record_bag: true
+    bag_root: /home/georgio/masterarbeit/bags
+    bag_start_wait_s: 1.5

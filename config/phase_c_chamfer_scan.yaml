@@ -1,0 +1,105 @@
+phase_c_chamfer_scan:
+  ros__parameters:
+    phase_a_validated: true
+    phase_b_reference_validated: true
+    chamfer_path_confirmed: false
+
+    sliding_frame: sliding_frame
+    tcp_frame: tool0_controller
+    tf_timeout_s: 10.0
+    publish_sliding_frame: true
+    sliding_parent_frame: base
+    sliding_tf_x_m: -0.22737
+    sliding_tf_y_m: -0.40030
+    sliding_tf_z_m: 0.03517
+    sliding_tf_qx: -0.029727
+    sliding_tf_qy: 0.047563
+    sliding_tf_qz: -0.975264
+    sliding_tf_qw: -0.213808
+
+    start_x_m: 0.0
+    start_y_m: 0.0
+    start_z_m: 0.002
+    start_qx: 0.056396
+    start_qy: 0.030219
+    start_qz: 0.280641
+    start_qw: 0.957678
+    start_joints:
+      - 1.4617331663714808
+      - -1.1869505506804963
+      - 0.8272621631622314
+      - -1.889268537560934
+      - -1.536943260823385
+      - -0.22527915636171514
+    move_to_start_duration_s: 4.0
+    start_position_tolerance_m: 0.001
+    start_orientation_tolerance_rad: 0.0523598776
+
+    waypoint_yaml_file: /home/georgio/masterarbeit/radial_ik_waypoints.yaml
+    radial_speed_mps: 0.001
+    max_waypoint_index: 5
+    endpoint_radial_tolerance_m: 0.0005
+    cross_axis_tolerance_m: 0.0005
+    orientation_tolerance_rad: 0.0523598776
+    monotonic_noise_tolerance_m: 0.00010
+
+    normal_force_n: -5.0
+    contact_threshold_n: 2.0
+    contact_persistence_s: 0.05
+    contact_timeout_s: 3.0
+    stabilisation_after_contact_s: 0.5
+    baseline_duration_s: 1.0
+    speed_limit_z_mps: 0.005
+    max_abs_normal_force_n: 12.0
+    min_abs_contact_force_n: 1.0
+    contact_loss_persistence_s: 0.20
+    wrench_timeout_s: 0.25
+    deviation_xy_m: 0.002
+    deviation_z_m: 0.005
+    deviation_angle_rad: 0.05
+    damping_factor: 0.5
+    gain_scaling: 0.3
+    wrench_topic: /force_torque_sensor_broadcaster/wrench
+
+    # Glättung an den IK-Stützstellen
+    use_waypoint_velocities: true
+    use_waypoint_accelerations: true
+    endpoint_velocity_zero: true
+
+    # Erwarteter kontrollierter Stopp im Fasenbereich
+    abort_abs_dy_from_slide_start_m: 0.0015
+    hard_abort_abs_dz_from_baseline_m: 0.0020
+    controlled_stop_abs_dz_m: 0.00120
+    controlled_stop_min_x_m: 0.0075
+    controlled_stop_persistence_s: 0.06
+    abort_orientation_rad: 0.1047197551
+    abort_radial_undershoot_m: 0.0005
+    abort_radial_overshoot_m: 0.0010
+    early_contact_loss_max_x_m: 0.0070
+
+    # Referenzprofil auf der nachgewiesen ebenen Vorlaufstrecke
+    reference_fit_x_min_m: 0.0010
+    reference_fit_x_max_m: 0.0068
+    detector_min_x_m: 0.0070
+
+    # Robuste Offline-Detektoren; zunächst Pilotparameter
+    filter_window_s: 0.15
+    detector_persistence_s: 0.12
+    position_residual_threshold_m: -0.00025
+    force_relief_threshold_n: 1.5
+    combined_position_threshold_m: -0.00020
+    combined_force_relief_threshold_n: 1.0
+
+    lift_to_nominal_endpoint_duration_s: 2.0
+    return_speed_mps: 0.001
+    pause_after_force_stop_s: 0.25
+    pause_after_lift_s: 0.25
+
+    sample_period_s: 0.02
+    result_root: /home/georgio/masterarbeit/results/phase_c
+    run_name: phase_c_chamfer_pilot_01
+    bag_root: /home/georgio/masterarbeit/bags/phase_c
+    record_bag: true
+    bag_start_wait_s: 2.0
+    tare_wait_s: 1.0
+    event_topic: /phase_c_chamfer_scan/events

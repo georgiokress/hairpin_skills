@@ -1,22 +1,48 @@
 <?xml version="1.0"?>
-<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<?xml-model
+  href="http://download.ros.org/schema/package_format3.xsd"
+  schematypens="http://www.w3.org/2001/XMLSchema"?>
+
 <package format="3">
   <name>hairpin_skills</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
-  <maintainer email="uvxga@student.kit.edu">georgio</maintainer>
-  <license>TODO: License declaration</license>
 
+  <description>
+    Hairpin insertion and sliding skills for the UR3e experimental setup.
+  </description>
+
+  <maintainer email="uvxga@student.kit.edu">
+    georgio
+  </maintainer>
+
+  <license>MIT</license>
+
+  <!-- ROS 2 Python -->
   <depend>rclpy</depend>
+
+  <!-- Message and service interfaces -->
   <depend>geometry_msgs</depend>
   <depend>sensor_msgs</depend>
   <depend>trajectory_msgs</depend>
   <depend>control_msgs</depend>
   <depend>controller_manager_msgs</depend>
   <depend>std_srvs</depend>
+  <depend>std_msgs</depend>
   <depend>ur_msgs</depend>
+  <exec_depend>python3-numpy</exec_depend>
+
+  <!-- TF -->
   <depend>tf2_ros</depend>
 
+  <!-- ROS 2 launch system -->
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+  <exec_depend>ament_index_python</exec_depend>
+
+  <!-- Universal Robots driver -->
+  <exec_depend>ur_robot_driver</exec_depend>
+
+  <!-- Tests -->
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
   <test_depend>ament_pep257</test_depend>

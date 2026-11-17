@@ -14,5 +14,17 @@ log/
 *.csv
 *.json
 
+# Kleine, versionierte Reproduzierbarkeitsartefakte trotz JSON-Regel
+!schemas/
+!schemas/*.json
+!examples/
+!examples/*.json
+
 .DS_Store
 .env
+
+# Lokale Arbeitsanweisungen und historische Sicherungskopien
+AGENTS.md
+*.backup
+*_backup.py
+*_backup.yaml

@@ -38,6 +38,7 @@ from controller_manager_msgs.srv import ListControllers, SwitchController
 from geometry_msgs.msg import TransformStamped, WrenchStamped
 from rclpy.action import ActionClient
 from rclpy.node import Node
+from rclpy.qos import qos_profile_sensor_data
 from rclpy.time import Time
 from std_srvs.srv import Trigger
 from tf2_ros import (
@@ -158,6 +159,9 @@ class RadialSlidingNode(Node):
         self.declare_parameter("bag_name", "radial_sliding_01")
         self.declare_parameter("bag_start_wait_s", 2.0)
         self.declare_parameter("tare_wait_s", 1.0)
+        self.declare_parameter(
+            "tare_service", "/ati_ft_rtde_bridge/bias"
+        )
 
         # Interfaces
         self.scaled_action = (
@@ -183,7 +187,7 @@ class RadialSlidingNode(Node):
         )
         self.zero_client = self.create_client(
             Trigger,
-            "/io_and_status_controller/zero_ftsensor",
+            str(self.p("tare_service")),
         )
         self.force_start_client = self.create_client(
             SetForceMode,
@@ -204,7 +208,7 @@ class RadialSlidingNode(Node):
             WrenchStamped,
             str(self.p("wrench_topic")),
             self._wrench_cb,
-            50,
+            qos_profile_sensor_data,
         )
 
         self.bag_process: Optional[subprocess.Popen] = None
@@ -284,7 +288,7 @@ class RadialSlidingNode(Node):
         for client, name in (
             (self.switch_client, "switch_controller"),
             (self.list_client, "list_controllers"),
-            (self.zero_client, "zero_ftsensor"),
+            (self.zero_client, str(self.p("tare_service"))),
             (self.force_start_client, "start_force_mode"),
             (self.force_stop_client, "stop_force_mode"),
         ):
@@ -566,7 +570,7 @@ class RadialSlidingNode(Node):
             "ros2", "bag", "record", "-s", "mcap",
             "/tf", "/tf_static", "/joint_states",
             "/tcp_pose_broadcaster/pose",
-            "/force_torque_sensor_broadcaster/wrench",
+            str(self.p("wrench_topic")),
             "-o", str(path),
         ]
         self.bag_process = subprocess.Popen(

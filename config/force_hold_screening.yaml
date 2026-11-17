@@ -1,0 +1,26 @@
+/**:
+  ros__parameters:
+    # Qualification-only force-bound screening; no tangential endpoint exists.
+    purpose: force_bounds_screening
+    collection_dry_run: true
+    run_authorized: false
+
+    hold_time_s: 5.0
+    max_screening_setpoint_n: 14.0
+    settling_exclusion_s: 0.5
+    tcp_normal_drift_abort_m: 0.001
+    tcp_cross_drift_abort_m: 0.0005
+    gauge_resolution_mm: 0.05
+    gauge_slip_threshold_mm: 0.10
+
+    # Upward slip-bound screening. The controller command retains the Phase-B
+    # negative sign; the filename stores the positive force magnitude.
+    normal_force_n: -14.0
+    contact_threshold_n: 0.5
+    max_abs_normal_force_n: 17.2
+    speed_limit_z_mps: 0.001
+    bag_root: /home/georgio/masterarbeit/bags/phase_b_spi/force_screening
+    bag_name: pb_spi_s4_setznest2_intctrl_atipass_hold_fn140_boundscreen_r023
+    bag_start_wait_s: 5.0
+
+    screening_config_path: /home/georgio/hairpin_ws/src/hairpin_skills/config/force_hold_screening.yaml

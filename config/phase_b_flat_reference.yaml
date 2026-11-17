@@ -1,0 +1,110 @@
+phase_b_flat_reference:
+  ros__parameters:
+    # Erst nach erfolgreicher Phase A und Sichtprüfung der ebenen Fläche aktivieren.
+    phase_a_validated: true
+    flat_surface_confirmed: true
+
+    sliding_frame: sliding_frame
+    tcp_frame: tool0_controller
+    tf_timeout_s: 10.0
+    # Gemessener Setznest2-Transform vom 24.08.2026.
+    # base -> sliding_frame kommt ausschliesslich aus ur3e_bringup.launch.py.
+    # Keine zweite statische TF-Autoritaet im Versuchsknoten.
+    publish_sliding_frame: false
+    sliding_parent_frame: base
+    sliding_tf_x_m: -0.228
+    sliding_tf_y_m: -0.400
+    sliding_tf_z_m: 0.038
+    sliding_tf_qx: -0.002
+    sliding_tf_qy: 0.0
+    sliding_tf_qz: 0.971
+    sliding_tf_qw: 0.240
+
+    start_x_m: 0.0
+    start_y_m: 0.0
+    start_z_m: 0.002
+    start_qx: -0.002
+    start_qy: 0.0
+    start_qz: 0.962
+    start_qw: -0.273
+    start_joints:
+      - 0.7422645727740687
+      - -0.9377638858607789
+      - 0.9123795032501221
+      - -1.3766160768321534
+      - -1.5674694220172327
+      - 0.1652015894651413
+    move_to_start_duration_s: 4.0
+    start_position_tolerance_m: 0.001
+    start_orientation_tolerance_rad: 0.0523598776
+
+    waypoint_yaml_file: /home/georgio/masterarbeit/radial_ik_waypoints_Setznest2.yaml
+    radial_speed_mps: 0.001
+    # Erster Kontaktpilot: 2 Wegpunkte = 5 mm. Danach auf 5 = 12,5 mm erhöhen.
+    max_waypoint_index: 2
+    endpoint_radial_tolerance_m: 0.0005
+    cross_axis_tolerance_m: 0.0005
+    orientation_tolerance_rad: 0.0523598776
+    monotonic_noise_tolerance_m: 0.00010
+
+    # Das Vorzeichen wird vor diesem Lauf mit nur einer sliding_frame-
+    # TF-Autoritaet begrenzt validiert.
+    normal_force_n: -2.0
+    contact_threshold_n: 1.0
+    contact_persistence_s: 0.05
+    contact_timeout_s: 5.0
+    stabilisation_after_contact_s: 0.5
+    baseline_duration_s: 1.0
+    speed_limit_z_mps: 0.001
+    max_abs_normal_force_n: 6.0
+    min_abs_contact_force_n: 0.5
+    contact_loss_persistence_s: 0.20
+    wrench_timeout_s: 0.25
+    deviation_xy_m: 0.002
+    deviation_z_m: 0.005
+    deviation_angle_rad: 0.05
+    damping_factor: 0.5
+    gain_scaling: 0.3
+    # Interner UR-Wrench bleibt ausschließlich ein diagnostischer Vergleich.
+    wrench_topic: /force_torque_sensor_broadcaster/wrench
+    # Autoritativer ATI-Kanal: exakt der software-gebiaste Wrench, den die
+    # Bridge in external_force_torque einspeist.
+    measurement_wrench_topic: /ati_ft_rtde_bridge/wrench_biased
+    measurement_wrench_required: true
+    measurement_wrench_timeout_s: 0.25
+    measurement_wrench_expected_frame: ati_ur_aligned
+    ati_bias_ready_topic: /ati_ft_rtde_bridge/bias_ready
+    ati_bias_ready_timeout_s: 10.0
+    robot_program_running_topic: /io_and_status_controller/robot_program_running
+    require_robot_program_running: true
+    # Nach ATI Bias muss der Mittelwert jeder Kraftkomponente im Stillstand
+    # innerhalb dieser Grenze liegen; sonst startet weder Bewegung noch Force Mode.
+    ati_bias_check_duration_s: 0.5
+    ati_bias_max_abs_mean_force_n: 0.25
+
+    # Harte Abbruchgrenzen für die ebene Referenzfahrt.
+    abort_abs_dy_from_slide_start_m: 0.0015
+    abort_abs_dz_from_baseline_m: 0.0015
+    abort_orientation_rad: 0.1047197551
+    abort_radial_undershoot_m: 0.0005
+    abort_radial_overshoot_m: 0.0010
+
+    # Vorläufige Qualitätskriterien für den Pilotlauf.
+    flat_residual_peak_to_peak_limit_m: 0.0005
+    mean_force_error_limit_n: 1.0
+
+    # Nach dem Force Mode zuerst am Endpunkt zur nominalen IK-Pose anheben.
+    lift_to_nominal_endpoint_duration_s: 2.0
+    return_speed_mps: 0.001
+    pause_after_force_stop_s: 0.25
+    pause_after_lift_s: 0.25
+
+    sample_period_s: 0.02
+    result_root: /home/georgio/masterarbeit/results/phase_b
+    # Neuer Pilot nach Beseitigung der doppelten sliding_frame-TF-Autoritaet.
+    run_name: phase_b_Setznest2_flat_Fm2N_v1_pilot_04
+    bag_root: /home/georgio/masterarbeit/bags
+    record_bag: true
+    bag_start_wait_s: 6.0
+    bag_qos_overrides_path: /home/georgio/hairpin_ws/src/hairpin_skills/config/rosbag_qos_overrides.yaml
+    event_topic: /phase_b_flat_reference/events

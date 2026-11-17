@@ -1,0 +1,203 @@
+diff --git a/ur_robot_driver/include/ur_robot_driver/hardware_interface.hpp b/ur_robot_driver/include/ur_robot_driver/hardware_interface.hpp
+index 671a0a4..5674f2f 100644
+--- a/ur_robot_driver/include/ur_robot_driver/hardware_interface.hpp
++++ b/ur_robot_driver/include/ur_robot_driver/hardware_interface.hpp
+@@ -300,0 +301,10 @@ protected:
++  // Optional external F/T input activation. The command must be sent through
++  // the ScriptCommandInterface after External Control has connected; a
++  // PolyScope script node placed before External Control is too early.
++  bool external_ft_rtde_input_enabled_ = false;
++  std::atomic_bool external_ft_rtde_activation_pending_ = false;
++  std::atomic_bool external_ft_rtde_active_ = false;
++  double external_ft_sensor_mass_ = 0.0;
++  urcl::vector3d_t external_ft_sensor_measuring_offset_ = { 0.0, 0.0, 0.0 };
++  urcl::vector3d_t external_ft_sensor_cog_ = { 0.0, 0.0, 0.0 };
++
+diff --git a/ur_robot_driver/launch/ur_control.launch.py b/ur_robot_driver/launch/ur_control.launch.py
+index f8e2d40..95ec5c5 100644
+--- a/ur_robot_driver/launch/ur_control.launch.py
++++ b/ur_robot_driver/launch/ur_control.launch.py
+@@ -69,0 +70,8 @@ def launch_setup(context):
++    external_ft_rtde_input_enabled = LaunchConfiguration("external_ft_rtde_input_enabled")
++    external_ft_sensor_mass = LaunchConfiguration("external_ft_sensor_mass")
++    external_ft_sensor_offset_x = LaunchConfiguration("external_ft_sensor_offset_x")
++    external_ft_sensor_offset_y = LaunchConfiguration("external_ft_sensor_offset_y")
++    external_ft_sensor_offset_z = LaunchConfiguration("external_ft_sensor_offset_z")
++    external_ft_sensor_cog_x = LaunchConfiguration("external_ft_sensor_cog_x")
++    external_ft_sensor_cog_y = LaunchConfiguration("external_ft_sensor_cog_y")
++    external_ft_sensor_cog_z = LaunchConfiguration("external_ft_sensor_cog_z")
+@@ -236,0 +245,8 @@ def launch_setup(context):
++            "external_ft_rtde_input_enabled": external_ft_rtde_input_enabled,
++            "external_ft_sensor_mass": external_ft_sensor_mass,
++            "external_ft_sensor_offset_x": external_ft_sensor_offset_x,
++            "external_ft_sensor_offset_y": external_ft_sensor_offset_y,
++            "external_ft_sensor_offset_z": external_ft_sensor_offset_z,
++            "external_ft_sensor_cog_x": external_ft_sensor_cog_x,
++            "external_ft_sensor_cog_y": external_ft_sensor_cog_y,
++            "external_ft_sensor_cog_z": external_ft_sensor_cog_z,
+@@ -490,0 +507,17 @@ def generate_launch_description():
++    declared_arguments.extend(
++        [
++            DeclareLaunchArgument(
++                "external_ft_rtde_input_enabled",
++                default_value="false",
++                choices=["true", "false"],
++                description="Enable external F/T input after External Control connects.",
++            ),
++            DeclareLaunchArgument("external_ft_sensor_mass", default_value="0.0"),
++            DeclareLaunchArgument("external_ft_sensor_offset_x", default_value="0.0"),
++            DeclareLaunchArgument("external_ft_sensor_offset_y", default_value="0.0"),
++            DeclareLaunchArgument("external_ft_sensor_offset_z", default_value="0.0"),
++            DeclareLaunchArgument("external_ft_sensor_cog_x", default_value="0.0"),
++            DeclareLaunchArgument("external_ft_sensor_cog_y", default_value="0.0"),
++            DeclareLaunchArgument("external_ft_sensor_cog_z", default_value="0.0"),
++        ]
++    )
+diff --git a/ur_robot_driver/launch/ur_rsp.launch.py b/ur_robot_driver/launch/ur_rsp.launch.py
+index 225d251..a5db49d 100644
+--- a/ur_robot_driver/launch/ur_rsp.launch.py
++++ b/ur_robot_driver/launch/ur_rsp.launch.py
+@@ -72,0 +73,8 @@ def generate_launch_description():
++    external_ft_rtde_input_enabled = LaunchConfiguration("external_ft_rtde_input_enabled")
++    external_ft_sensor_mass = LaunchConfiguration("external_ft_sensor_mass")
++    external_ft_sensor_offset_x = LaunchConfiguration("external_ft_sensor_offset_x")
++    external_ft_sensor_offset_y = LaunchConfiguration("external_ft_sensor_offset_y")
++    external_ft_sensor_offset_z = LaunchConfiguration("external_ft_sensor_offset_z")
++    external_ft_sensor_cog_x = LaunchConfiguration("external_ft_sensor_cog_x")
++    external_ft_sensor_cog_y = LaunchConfiguration("external_ft_sensor_cog_y")
++    external_ft_sensor_cog_z = LaunchConfiguration("external_ft_sensor_cog_z")
+@@ -177,0 +186,24 @@ def generate_launch_description():
++            "external_ft_rtde_input_enabled:=",
++            external_ft_rtde_input_enabled,
++            " ",
++            "external_ft_sensor_mass:=",
++            external_ft_sensor_mass,
++            " ",
++            "external_ft_sensor_offset_x:=",
++            external_ft_sensor_offset_x,
++            " ",
++            "external_ft_sensor_offset_y:=",
++            external_ft_sensor_offset_y,
++            " ",
++            "external_ft_sensor_offset_z:=",
++            external_ft_sensor_offset_z,
++            " ",
++            "external_ft_sensor_cog_x:=",
++            external_ft_sensor_cog_x,
++            " ",
++            "external_ft_sensor_cog_y:=",
++            external_ft_sensor_cog_y,
++            " ",
++            "external_ft_sensor_cog_z:=",
++            external_ft_sensor_cog_z,
++            " ",
+@@ -423,0 +456,17 @@ def generate_launch_description():
++    declared_arguments.extend(
++        [
++            DeclareLaunchArgument(
++                "external_ft_rtde_input_enabled",
++                default_value="false",
++                choices=["true", "false"],
++                description="Enable external F/T input after External Control connects.",
++            ),
++            DeclareLaunchArgument("external_ft_sensor_mass", default_value="0.0"),
++            DeclareLaunchArgument("external_ft_sensor_offset_x", default_value="0.0"),
++            DeclareLaunchArgument("external_ft_sensor_offset_y", default_value="0.0"),
++            DeclareLaunchArgument("external_ft_sensor_offset_z", default_value="0.0"),
++            DeclareLaunchArgument("external_ft_sensor_cog_x", default_value="0.0"),
++            DeclareLaunchArgument("external_ft_sensor_cog_y", default_value="0.0"),
++            DeclareLaunchArgument("external_ft_sensor_cog_z", default_value="0.0"),
++        ]
++    )
+diff --git a/ur_robot_driver/src/hardware_interface.cpp b/ur_robot_driver/src/hardware_interface.cpp
+index ee9be56..607dd6f 100644
+--- a/ur_robot_driver/src/hardware_interface.cpp
++++ b/ur_robot_driver/src/hardware_interface.cpp
+@@ -154,0 +155,2 @@ URPositionHardwareInterface::on_init(const hardware_interface::HardwareComponent
++  external_ft_rtde_activation_pending_ = false;
++  external_ft_rtde_active_ = false;
+@@ -543,0 +546,28 @@ URPositionHardwareInterface::on_configure(const rclcpp_lifecycle::State& previou
++  // The external F/T input has to be enabled after the robot-side External
++  // Control script has connected to the ScriptCommandInterface. Store the
++  // configuration here; asyncThread() performs the actual call on every new
++  // program connection.
++  const auto external_ft_enabled_it = info_.hardware_parameters.find("external_ft_rtde_input_enabled");
++  external_ft_rtde_input_enabled_ =
++      external_ft_enabled_it != info_.hardware_parameters.end() &&
++      (external_ft_enabled_it->second == "true" || external_ft_enabled_it->second == "True");
++  if (external_ft_rtde_input_enabled_) {
++    external_ft_sensor_mass_ = stod(info_.hardware_parameters.at("external_ft_sensor_mass"));
++    external_ft_sensor_measuring_offset_ = {
++      stod(info_.hardware_parameters.at("external_ft_sensor_offset_x")),
++      stod(info_.hardware_parameters.at("external_ft_sensor_offset_y")),
++      stod(info_.hardware_parameters.at("external_ft_sensor_offset_z"))
++    };
++    external_ft_sensor_cog_ = {
++      stod(info_.hardware_parameters.at("external_ft_sensor_cog_x")),
++      stod(info_.hardware_parameters.at("external_ft_sensor_cog_y")),
++      stod(info_.hardware_parameters.at("external_ft_sensor_cog_z"))
++    };
++    RCLCPP_INFO(rclcpp::get_logger("URPositionHardwareInterface"),
++                "External F/T RTDE input will be enabled after External Control connects "
++                "(mass=%.6f kg, offset=[%.6f, %.6f, %.6f] m, cog=[%.6f, %.6f, %.6f] m).",
++                external_ft_sensor_mass_, external_ft_sensor_measuring_offset_[0],
++                external_ft_sensor_measuring_offset_[1], external_ft_sensor_measuring_offset_[2],
++                external_ft_sensor_cog_[0], external_ft_sensor_cog_[1], external_ft_sensor_cog_[2]);
++  }
++
+@@ -770,0 +801,10 @@ void URPositionHardwareInterface::asyncThread()
++    if (external_ft_rtde_input_enabled_ && external_ft_rtde_activation_pending_ && robot_program_running_ &&
++        ur_driver_ != nullptr) {
++      if (ur_driver_->ftRtdeInputEnable(true, external_ft_sensor_mass_, external_ft_sensor_measuring_offset_,
++                                        external_ft_sensor_cog_)) {
++        external_ft_rtde_activation_pending_ = false;
++        external_ft_rtde_active_ = true;
++        RCLCPP_INFO(rclcpp::get_logger("URPositionHardwareInterface"),
++                    "External F/T RTDE input activated through the connected External Control script.");
++      }
++    }
+@@ -926,0 +967,4 @@ void URPositionHardwareInterface::handleRobotProgramState(bool program_running)
++  if (external_ft_rtde_input_enabled_) {
++    external_ft_rtde_active_ = false;
++    external_ft_rtde_activation_pending_ = program_running;
++  }
+diff --git a/ur_robot_driver/urdf/ur.ros2_control.xacro b/ur_robot_driver/urdf/ur.ros2_control.xacro
+index 9d97378..877b787 100644
+--- a/ur_robot_driver/urdf/ur.ros2_control.xacro
++++ b/ur_robot_driver/urdf/ur.ros2_control.xacro
+@@ -26,0 +27,4 @@
++    external_ft_rtde_input_enabled:=false
++    external_ft_sensor_mass:=0.0
++    external_ft_sensor_offset_x:=0.0 external_ft_sensor_offset_y:=0.0 external_ft_sensor_offset_z:=0.0
++    external_ft_sensor_cog_x:=0.0 external_ft_sensor_cog_y:=0.0 external_ft_sensor_cog_z:=0.0
+@@ -59,0 +64,8 @@
++          <param name="external_ft_rtde_input_enabled">${external_ft_rtde_input_enabled}</param>
++          <param name="external_ft_sensor_mass">${external_ft_sensor_mass}</param>
++          <param name="external_ft_sensor_offset_x">${external_ft_sensor_offset_x}</param>
++          <param name="external_ft_sensor_offset_y">${external_ft_sensor_offset_y}</param>
++          <param name="external_ft_sensor_offset_z">${external_ft_sensor_offset_z}</param>
++          <param name="external_ft_sensor_cog_x">${external_ft_sensor_cog_x}</param>
++          <param name="external_ft_sensor_cog_y">${external_ft_sensor_cog_y}</param>
++          <param name="external_ft_sensor_cog_z">${external_ft_sensor_cog_z}</param>
+diff --git a/ur_robot_driver/urdf/ur.urdf.xacro b/ur_robot_driver/urdf/ur.urdf.xacro
+index e14476d..04f2adb 100644
+--- a/ur_robot_driver/urdf/ur.urdf.xacro
++++ b/ur_robot_driver/urdf/ur.urdf.xacro
+@@ -32,0 +33,8 @@
++  <xacro:arg name="external_ft_rtde_input_enabled" default="false"/>
++  <xacro:arg name="external_ft_sensor_mass" default="0.0"/>
++  <xacro:arg name="external_ft_sensor_offset_x" default="0.0"/>
++  <xacro:arg name="external_ft_sensor_offset_y" default="0.0"/>
++  <xacro:arg name="external_ft_sensor_offset_z" default="0.0"/>
++  <xacro:arg name="external_ft_sensor_cog_x" default="0.0"/>
++  <xacro:arg name="external_ft_sensor_cog_y" default="0.0"/>
++  <xacro:arg name="external_ft_sensor_cog_z" default="0.0"/>
+@@ -100,0 +109,8 @@
++    external_ft_rtde_input_enabled="$(arg external_ft_rtde_input_enabled)"
++    external_ft_sensor_mass="$(arg external_ft_sensor_mass)"
++    external_ft_sensor_offset_x="$(arg external_ft_sensor_offset_x)"
++    external_ft_sensor_offset_y="$(arg external_ft_sensor_offset_y)"
++    external_ft_sensor_offset_z="$(arg external_ft_sensor_offset_z)"
++    external_ft_sensor_cog_x="$(arg external_ft_sensor_cog_x)"
++    external_ft_sensor_cog_y="$(arg external_ft_sensor_cog_y)"
++    external_ft_sensor_cog_z="$(arg external_ft_sensor_cog_z)"
