@@ -77,14 +77,5 @@ Das Development-Modell wurde auf 117 Läufen trainiert (90 Haupt- und 27
 Pilotläufe). Die Inversion suchte innerhalb von 1–5 N und 1–10 mm/s über 20
 Gewichtspaare und drei feste Startpunkte, also 60 Optimierungen mit je 120
 Adam-Schritten. Die real ausgewertete Endvalidierung umfasst 40 vollständige
-logische Läufe; der technisch abgebrochene erste Versuch `r026` blieb im
-Roharchiv und wurde durch `_a02_r026` ersetzt.
+Läufe.
 
-Rohbags und große Ergebnisartefakte sind nicht Bestandteil von Git. Sie
-müssen zusammen mit Auswahlmanifest und SHA-256-Prüfsummen separat archiviert
-werden.
-
-## Lizenz
-
-Eigener Quellcode: MIT, siehe [LICENSE](LICENSE). Externe Abhängigkeiten
-behalten ihre jeweilige Lizenz.
