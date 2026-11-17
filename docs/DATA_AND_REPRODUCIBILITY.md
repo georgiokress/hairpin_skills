@@ -80,28 +80,3 @@ pb_spi_s4_setznest2_intctrl_atipass_d015_v####_fn###_<purpose>_r###
 Zehntel-Newton. Run-ID, YAML-Parameter und Zielpfad müssen übereinstimmen.
 Existierende Bag-Ordner dürfen nicht überschrieben oder umbenannt werden.
 
-## Prüfschritte nach jeder Aufnahme
-
-```bash
-ros2 bag info /PFAD/ZUM/RUN
-
-python3 ~/hairpin_ws/src/hairpin_skills/tools/validate_run_manifest.py \
-  /PFAD/ZUM/RUN/run_manifest.json \
-  --verify-files
-
-sha256sum /PFAD/ZUM/RUN/*.mcap \
-  /PFAD/ZUM/RUN/metadata.yaml \
-  /PFAD/ZUM/RUN/run_manifest.json
-```
-
-Zusätzlich zu Schema und Hashes müssen geprüft werden:
-
-- jeder Pflichttopic ist vorhanden und nicht leer;
-- ROS-Zeitstempel sind monoton und die gemeinsame Zeitbasis ist plausibel;
-- `slide_started` und `slide_finished` sind eindeutig;
-- TF-Kette und Frames sind vollständig;
-- keine NaN-/Inf-Werte;
-- 15-mm-Weg und Bewegungsrichtung sind plausibel;
-- interner und passiver ATI-Wrench bleiben getrennt;
-- Tare- und Baselinefenster sind vorhanden;
-- Manifest, Konfiguration und tatsächlich verwendete Parameter stimmen überein.
