@@ -80,16 +80,6 @@ pb_spi_s4_setznest2_intctrl_atipass_d015_v####_fn###_<purpose>_r###
 Zehntel-Newton. Run-ID, YAML-Parameter und Zielpfad müssen übereinstimmen.
 Existierende Bag-Ordner dürfen nicht überschrieben oder umbenannt werden.
 
-## Abschlussdatensatz
-
-Der Abschlussdatensatz besitzt 40 technisch vollständige logische Läufe in
-vier Bedingungen. Insgesamt wurden 41 Versuche gestartet, weil der erste
-`r026` technisch abbrach und unverändert im Roharchiv erhalten blieb. Der
-gültige Ersatzlauf enthält `_a02_r026`; `r040` bleibt Teil des Datensatzes.
-
-Deshalb ist das Auswahlmanifest maßgeblich. Eine Auswertung darf nicht einfach
-alle Unterordner des Rohdatenverzeichnisses einlesen.
-
 ## Prüfschritte nach jeder Aufnahme
 
 ```bash
