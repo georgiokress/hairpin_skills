@@ -1,4 +1,4 @@
-# Finaler Hairpin-Sliding- und SPI-Workflow
+# Hairpin-Sliding- und SPI-Workflow
 
 Dieses Repository enthält ausschließlich den für die Abschlussarbeit relevanten
 Endstand: den kraftgeregelten 15-mm-Sliding-Skill, die reproduzierbare
