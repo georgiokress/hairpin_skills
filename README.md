@@ -16,16 +16,11 @@ UR3e + interner F/T ──> phase_b_spi_data_collection ──> MCAP + Manifest
 ATI Net F/T ──────────> ati_rdt_wrench (nur passive Referenz) ─┘
                                       │
                                       v
-data_conversion/export_rosbags.py ──> native Runs / Datensatz
+data_conversion/export_rosbags.py ──> native Runs / Datensatz (Erzeugung von verwertbaren MAessreihen))
                                       │
                                       v
 spi/  ──> Qualitätsmodell + Trajektorienmodell ──> Refit ──> Inversion
 ```
-
-Phase A, Phase C sowie frühere Diagnose- und Testprogramme waren
-Entwicklungsstände und gehören nicht zum finalen wissenschaftlichen Ablauf.
-Sie bleiben über die Git-Historie nachvollziehbar, stehen aber nicht mehr im
-aktuellen Arbeitsstand.
 
 ## Einstieg
 
