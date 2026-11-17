@@ -59,12 +59,6 @@ export HAIRPIN_MAIN_BAG_ROOT=/PFAD/ZU/bags/phase_b_spi/main_doe_v1
 python data_conversion/analyze_export.py /PFAD/ZUM/NEUEN/EXPORTORDNER
 ```
 
-`reconcile_native.py` ergänzt niemals Messwerte. Es darf ausschließlich
-belegbaren Kontext aus dem eingefrorenen Plan ergänzen. Die 27 Pilotläufe
-wurden mit dem in `data_conversion/spi_bounds_v1/` archivierten Exportvertrag
-aufbereitet und anschließend unverändert in das 117-Run-Development-Bundle
-übernommen.
-
 Die für das Training erwartete Struktur lautet:
 
 ```text
