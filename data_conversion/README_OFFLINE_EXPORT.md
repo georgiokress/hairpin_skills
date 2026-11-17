@@ -1,4 +1,4 @@
-# Offline-Exporter main_doe_v1, Version 1
+# Offline-Exporter
 
 Dieser zusätzliche Exporter ändert weder Controller noch Detektor, Rohbags oder historische Auswertungen. Er startet kein Training und sendet keine ROS-Service-, Aktions- oder Bewegungsanforderungen. Eingabe ist ausschließlich die geprüfte Liste von 90 abgeschlossenen Hauptserienläufen; zehn technische Abbruchansätze bleiben separat.
 
@@ -24,9 +24,6 @@ Tests ohne Roboter: mit der SPI-Venv `python -m unittest discover -s CODE_DIR -p
 - Trajektorie 640×15 bei 32 ms: EOS, Success, Position, Quaternion wxyz, sechs interne Wrench-Kanäle.
 - Native z_R-Detektion vor dem Resampling, eingefrorene Schwelle 0,075 mm und Persistenz/EMA 32 ms. Ortsfehler gegen laufrelatives r_GT.
 - Passive ATI separat, nicht als Modellinput. Sensorachsen rotiert, Momentenbezugspunkt nicht verschoben.
-- Paddingmaske und gültige Länge separat im HDF. Alter SPI-Loader ignoriert diese Gruppen: Trainingsverlust vor produktivem Fit ausdrücklich anpassen und testen.
-- Success bei angenommenem NOSLIP ist bedingt auf diese Nutzerannahme. Stabiler Kontakt und vollständiger Setzprozess sind damit nicht zertifiziert.
-- Fehlender Trigger bleibt fehlender nativer Ortsfehler; technisch abgebrochene Aufnahmen werden nicht zu Failure-Läufen umgedeutet.
-- Historischen Pilot separat belassen; Vergleichbarkeit nicht ohne Nachweis voraussetzen.
+- Paddingmaske und gültige Länge separat im HDF.
 
-Die maschinenlesbaren CSV-Dateien sind flache Interchange-Tabellen aus den analytischen JSON-Ergebnissen, keine formatierten Excel-Arbeitsmappen. Eine Zeile je Lauf bzw. Parameterkombination, Einheiten im Feldnamen, unbekannte Werte als leer/null und Provenienz-/Annahmenfelder separat.
+Die maschinenlesbaren CSV-Dateien sind flache Interchange-Tabellen aus den analytischen JSON-Ergebnissen, keine formatierten Excel-Arbeitsmappen. Eine Zeile je Lauf bzw. Parameterkombination, Einheiten im Feldnamen, unbekannte Werte als leer/null und Annahmenfelder separat.
