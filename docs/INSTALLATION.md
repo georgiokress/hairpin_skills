@@ -102,19 +102,4 @@ Commit im Run-Manifest landet. Vor der Nutzung an einem anderen Roboter oder Auf
 müssen Kalibrierung, TCP, Payload, Startpose, Wegpunkte und Prozessframe neu
 validiert werden.
 
-## 6. Versionsnachweis
 
-Für eine wissenschaftlich nachvollziehbare Aufnahme sollten vor dem Versuch
-mindestens folgende Informationen gesichert werden:
-
-```bash
-git -C ~/hairpin_ws/src/hairpin_skills rev-parse HEAD
-git -C ~/hairpin_ws/src/hairpin_skills status --short
-git -C ~/hairpin_ws/src/Universal_Robots_ROS2_Driver rev-parse HEAD
-git -C ~/hairpin_ws/src/Universal_Robots_ROS2_Driver diff --check
-ros2 doctor --report
-```
-
-Ein schmutziger Working Tree ist kein ausreichender Versionsnachweis. Alle für
-die Arbeit verwendeten Nodes, Konfigurationen und Launch-Dateien müssen vor
-der Übergabe committed und mit einem eindeutigen Git-Tag versehen werden.
