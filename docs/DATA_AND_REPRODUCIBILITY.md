@@ -12,8 +12,10 @@ Ergebnisse:
 ~/masterarbeit/config/phase_b_spi/     Run-Pläne und Run-Konfigurationen
 ```
 
-Die absoluten Pfade in den YAML-Dateien dokumentieren den verwendeten Rechner.
-Auf einem anderen System sind sie bewusst und nachvollziehbar zu ersetzen.
+Die absoluten Pfade in der ROS-YAML dokumentieren den verwendeten Rechner und
+sind auf einem anderen System als ROS-Parameter zu ersetzen. Die Offline-SPI-
+Skripte verwenden stattdessen `HAIRPIN_DATASET_ROOT` und
+`HAIRPIN_RESULTS_ROOT`; siehe `SPI_WORKFLOW.md`.
 
 ## Inhalt eines Rohdaten-Runs
 

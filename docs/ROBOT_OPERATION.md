@@ -1,7 +1,11 @@
 # Roboter starten und Daten aufnehmen
 
-Diese Anleitung beschreibt den finalen Phase-B-Aufnahmeweg der Masterarbeit:
-interne UR-Kraftregelung, ATI nur passiv, 15-mm-Bahn in `+x_R`.
+Diese Anleitung beschreibt den finalen Aufnahmeweg der Masterarbeit: interne
+UR-Kraftregelung, ATI nur passiv, 15-mm-Bahn in `+x_R`.
+
+Der Name `phase_b_spi_data_collection` ist als historischer Programmname
+erhalten. Er bezeichnet hier den final verwendeten Collector; separate
+Phase-A- und Phase-C-Programme werden für diesen Ablauf nicht benötigt.
 
 > **Keine Fernfreigabe:** Jeder reale Lauf benötigt eine eingewiesene Person
 > am Roboter, freien Arbeitsraum, erreichbaren Not-Halt und eine aktuelle

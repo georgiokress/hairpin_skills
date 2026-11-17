@@ -1,0 +1,5 @@
+repositories:
+  shadow-program-inversion:
+    type: git
+    url: https://github.com/benjaminalt/shadow-program-inversion.git
+    version: 05649f76a941092b3c2a829427b3dc980f712761

@@ -55,8 +55,9 @@ colcon build --symlink-install
 source install/setup.bash
 ```
 
-Die Python-Abhängigkeiten werden über `package.xml` und `rosdep` beschrieben.
-Ein separates `requirements.txt` wäre für dieses ROS-Paket daher redundant.
+Die ROS-Abhängigkeiten werden über `package.xml` und `rosdep` beschrieben.
+Die davon getrennte Offline-SPI-Umgebung wird anschließend mit
+`spi/requirements.txt` installiert; Details stehen in `SPI_WORKFLOW.md`.
 
 ## 4. Installation prüfen
 
@@ -73,9 +74,8 @@ colcon test --packages-select hairpin_skills
 colcon test-result --verbose
 ```
 
-Erwartet werden unter anderem die Entry-Points `ati_rdt_wrench`,
-`phase_a_radial_ik_validator`, `phase_b_spi_data_collection` und
-`phase_c_chamfer_scan`.
+Erwartet werden genau die drei Abschluss-Entry-Points `ati_rdt_wrench`,
+`radial_sliding_test` und `phase_b_spi_data_collection`.
 
 Der Paket-Build ist für den dokumentierten Stand verifiziert. Die vorhandenen
 ament-Linttests melden allerdings bestehende Flake8-/Pep257-Verstöße im
@@ -97,7 +97,6 @@ des validierten Laboraufbaus:
 
 - `config/ur3e_calibration.yaml`: roboterspezifische kinematische Kalibrierung;
 - `launch/ur3e_bringup.launch.py`: IPs, Sensor-Frames und `sliding_frame`;
-- `config/phase_a_radial_ik_validator.yaml`: Startpose und IK-Wegpunktdatei;
 - `config/phase_b_spi_data_collection.yaml`: Kraft, Geschwindigkeit, Pfade und
   Aufnahmegates;
 - `config/rosbag_qos_overrides.yaml`: QoS für `/tf` und `/tf_static`.
