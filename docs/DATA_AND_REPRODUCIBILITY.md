@@ -1,4 +1,4 @@
-# Daten, Dateiformate und Reproduzierbarkeit
+# Daten, Dateiformate 
 
 ## Speicherorte
 
