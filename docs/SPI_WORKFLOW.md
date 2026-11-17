@@ -17,11 +17,6 @@ python -m pip install -r spi/requirements.txt
 Der dokumentierte Abschlussstand verwendete Python 3.11 sowie NumPy 2.4.6,
 SciPy 1.17.1, PyTables 3.11.1, PyTorch 2.13.0 (CPU) und Matplotlib 3.11.1.
 
-Kernlogik ohne Forschungsdaten prüfen:
-
-```bash
-python -m unittest discover -s spi -p 'test_*.py'
-```
 
 ## 2. Rohbags exportieren
 
