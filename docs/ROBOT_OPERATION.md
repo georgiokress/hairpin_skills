@@ -3,13 +3,6 @@
 Diese Anleitung beschreibt den finalen Aufnahmeweg der Masterarbeit: interne
 UR-Kraftregelung, ATI nur passiv, 15-mm-Bahn in `+x_R`.
 
-Der Name `phase_b_spi_data_collection` ist als historischer Programmname
-erhalten. Er bezeichnet hier den final verwendeten Collector; separate
-Phase-A- und Phase-C-Programme werden für diesen Ablauf nicht benötigt.
-
-> **Keine Fernfreigabe:** Jeder reale Lauf benötigt eine eingewiesene Person
-> am Roboter, freien Arbeitsraum, erreichbaren Not-Halt und eine aktuelle
-> Freigabe. Die hier gezeigten Befehle sind keine Sicherheitsfunktion.
 
 ## 1. Checkliste vor dem Start
 
@@ -24,8 +17,6 @@ Phase-A- und Phase-C-Programme werden für diesen Ablauf nicht benötigt.
   nicht automatisch gestartet.
 - Der ATI-URCap-Daemon ist gestoppt. Es laufen weder ATI→RTDE-Bridge noch
   `ATI_RTDE_enable`/`ATI_RTDE_disable`.
-- Für die Aufnahme ist ein neuer, noch nicht vorhandener Run-Name vorgesehen.
-  Bestehende Bag- oder Ergebnisordner werden nicht überschrieben.
 
 ## 2. Terminal vorbereiten
 
@@ -179,28 +170,7 @@ Der normale Ablauf ist:
 `Ctrl+C` wird an den aktuellen Prozess weitergegeben, ist aber **kein**
 sicherheitsgerichteter Not-Halt.
 
-## 9. Run unmittelbar kontrollieren
 
-```bash
-ros2 bag info /PFAD/ZUM/BAG_ORDNER
-python3 ~/hairpin_ws/src/hairpin_skills/tools/validate_run_manifest.py \
-  /PFAD/ZUM/BAG_ORDNER/run_manifest.json \
-  --verify-files
-```
-
-Ein technisch vollständiger Run benötigt eine nichtleere MCAP-Datei,
-`metadata.yaml`, `run_manifest.json` und alle sieben Pflichttopics aus der
-[Datenbeschreibung](DATA_AND_REPRODUCIBILITY.md).
-
-## 10. Geordnet beenden
-
-1. Sicherstellen, dass Force Mode und bewegende Controller inaktiv sind.
-2. External-Control-Programm am Pendant stoppen.
-3. Collector, Treiber und ATI-Node mit `Ctrl+C` beenden.
-4. Run-Manifest validieren und Rohdaten schreibschützen beziehungsweise in
-   das vorgesehene Archiv kopieren.
-5. Bei Fehlern keine automatische Wiederholung oder Recovery starten. Ursache,
-   Versuchszähler und Rohdatenstatus zuerst dokumentieren.
 
 ## Abbruchkriterien
 
