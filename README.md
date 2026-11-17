@@ -9,11 +9,6 @@ Der Roboter regelt die Normalkraft mit dem **internen UR-F/T-Sensor**. Der
 ATI-Sensor wird nur passiv auf `/ati/wrench_passive` aufgezeichnet und hat
 keinen Einfluss auf die Regelung.
 
-> **Sicherheit:** Die ROS-Programme können einen realen Industrieroboter
-> bewegen und Force Mode aktivieren. Reale Läufe dürfen nur durch eingewiesene
-> Personen am validierten Aufbau, mit freiem Arbeitsraum und erreichbarem
-> Not-Halt ausgeführt werden.
-
 ## Was tatsächlich verwendet wurde
 
 ```text
