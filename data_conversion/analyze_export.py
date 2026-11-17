@@ -18,8 +18,8 @@ import torch
 sys.path.insert(0, str(Path(__file__).parent / 'spi_bounds_v1'))
 import convert_runs as convert
 from detector import PilotDetectorConfig, run_pilot_detector
+from hdf_io import load_data
 from sequence_config import SequenceConfig
-from shadow_program_inversion.utils.io import load_data_file
 
 DETECTOR_SHA = 'c729b577128b4870931e516c05e45ea84c9526e8753e6824e61886a55b3e7917'
 SEED = 20260918
@@ -131,7 +131,7 @@ def save_h5(entries, path):
         f.root._v_attrs.nominal_parameter_order = '[v_m_s,F_N_positive]'
         f.root._v_attrs.detector_sha256 = DETECTOR_SHA
         f.root._v_attrs.padding_requires_masked_training_loss = True
-    x, starts, sim, real = load_data_file(str(path))
+    x, starts, sim, real = load_data(path)
     expected = (len(entries), 640, 15)
     assert tuple(real.shape) == expected and tuple(sim.shape) == expected
     assert tuple(x.shape) == (len(entries), 2) and tuple(starts.shape) == (len(entries), 7)

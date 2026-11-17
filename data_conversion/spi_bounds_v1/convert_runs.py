@@ -47,11 +47,8 @@ import torch
 from scipy.signal import butter, sosfiltfilt
 from scipy.spatial.transform import Rotation, Slerp
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import _repo  # noqa: F401  (macht das SPI-Repo importierbar)
-
-from shadow_program_inversion.utils.io import save_simulation_data_to_file
 from detector import PilotDetectorConfig, run_pilot_detector
+from hdf_io import save_data
 from sliding_prior import PilotSlidingPrior
 from sequence_config import SequenceConfig, DT, DEFAULT_HORIZON_SAMPLES
 
@@ -259,8 +256,8 @@ def write_h5(entries, out_path, fz_sign):
         sins.append(torch.from_numpy(e["s_in"]))
         sims.append(sim.float())
         reals.append(torch.from_numpy(e["traj"]))
-    save_simulation_data_to_file(out_path, torch.stack(xs), torch.stack(sins),
-                                 sim=torch.stack(sims), real=torch.stack(reals))
+    save_data(out_path, torch.stack(xs), torch.stack(sins),
+              sim=torch.stack(sims), real=torch.stack(reals))
     membership_path = f"{out_path}.runs.json"
     with open(membership_path, "w", encoding="utf-8") as stream:
         json.dump(

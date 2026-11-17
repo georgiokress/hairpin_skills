@@ -5,10 +5,10 @@
 
 <package format="3">
   <name>hairpin_skills</name>
-  <version>0.0.0</version>
+  <version>1.0.0</version>
 
   <description>
-    Hairpin insertion and sliding skills for the UR3e experimental setup.
+    Final UR3e hairpin sliding acquisition used in the master's thesis.
   </description>
 
   <maintainer email="uvxga@student.kit.edu">

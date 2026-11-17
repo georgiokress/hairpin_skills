@@ -31,19 +31,9 @@ vcs import . < hairpin_skills/hairpin_skills.repos
 ```
 
 `hairpin_skills.repos` pinnt den Universal-Robots-Treiber auf den in der
-Arbeit verwendeten Tag. Für den exakten historischen Treiberstand wird danach
-der mitgelieferte Patch angewendet:
-
-```bash
-cd ~/hairpin_ws/src/Universal_Robots_ROS2_Driver
-git apply --check ../hairpin_skills/patches/ur_driver_external_ft.patch
-git apply ../hairpin_skills/patches/ur_driver_external_ft.patch
-```
-
-Der Patch ergänzt eine optionale externe F/T-RTDE-Aktivierung. Der finale
-Phase-B-Aufnahmeweg setzt diese Funktion ausdrücklich auf `false`; der Patch
-wird trotzdem mitgeführt, damit der verwendete Workspace vollständig
-rekonstruierbar bleibt.
+Arbeit verwendeten Tag. Der finale Aufnahmeweg verwendet ausschließlich den
+internen UR-F/T-Sensor zur Regelung und benötigt deshalb keinen lokalen
+Treiberpatch.
 
 ## 3. Abhängigkeiten installieren und bauen
 
@@ -74,14 +64,13 @@ colcon test --packages-select hairpin_skills
 colcon test-result --verbose
 ```
 
-Erwartet werden genau die drei Abschluss-Entry-Points `ati_rdt_wrench`,
-`radial_sliding_test` und `phase_b_spi_data_collection`.
+Erwartet werden genau die beiden Abschluss-Entry-Points `ati_rdt_wrench` und
+`phase_b_spi_data_collection`. `radial_sliding_test.py` bleibt als interne
+Basisklasse des Collectors installiert, ist aber kein eigener Bedienbefehl.
 
-Der Paket-Build ist für den dokumentierten Stand verifiziert. Die vorhandenen
-ament-Linttests melden allerdings bestehende Flake8-/Pep257-Verstöße im
-Forschungsquellcode. Ein rotes Lintergebnis ist transparent zu dokumentieren;
-es darf weder als erfolgreicher Test ausgegeben noch mit einer realen
-Hardwarevalidierung verwechselt werden.
+Der Paket-Build und die auf den ausführbaren ROS-Abschlusscode begrenzten
+ament-Linttests sind für den dokumentierten Stand verifiziert. Die getrennten
+Offline-SPI-Tests laufen in der in `SPI_WORKFLOW.md` beschriebenen Umgebung.
 
 Für den bewegungsfreien Manifest-Validator:
 
@@ -104,9 +93,12 @@ des validierten Laboraufbaus:
 - `examples/rgt_caliper_v1.json`: dokumentierte geometrische Referenz des
   verwendeten Setznest2-Aufbaus.
 
-Vor der Nutzung auf einem anderen PC müssen die absoluten Pfade unter
-`/home/georgio/masterarbeit` entweder angelegt oder als ROS-Parameter
-überschrieben werden. Vor der Nutzung an einem anderen Roboter oder Aufbau
+Paketressourcen werden installationsrelativ gefunden. Rohdaten landen
+standardmäßig unter `~/hairpin_data/bags`; alternativ kann vor dem Start
+`HAIRPIN_DATA_ROOT` gesetzt oder `bag_root` als ROS-Parameter überschrieben
+werden. Bei einer Installation ohne `--symlink-install` kann zusätzlich
+`HAIRPIN_REPOSITORY_PATH` auf den Git-Clone gesetzt werden, damit dessen
+Commit im Run-Manifest landet. Vor der Nutzung an einem anderen Roboter oder Aufbau
 müssen Kalibrierung, TCP, Payload, Startpose, Wegpunkte und Prozessframe neu
 validiert werden.
 
@@ -124,6 +116,5 @@ ros2 doctor --report
 ```
 
 Ein schmutziger Working Tree ist kein ausreichender Versionsnachweis. Alle für
-die Arbeit verwendeten Nodes, Konfigurationen, Launch-Dateien und Patches
-müssen vor der Übergabe committed und mit einem eindeutigen Git-Tag versehen
-werden.
+die Arbeit verwendeten Nodes, Konfigurationen und Launch-Dateien müssen vor
+der Übergabe committed und mit einem eindeutigen Git-Tag versehen werden.

@@ -17,19 +17,12 @@ Analytischer, voll differenzierbarer SlidingPrior für pilot_doe_v0.
 
 Pure torch, kein Cache, kein Multiprocessing -> Gradienten fließen zu x.
 """
-import os
-import sys
-
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import _repo  # noqa: F401  (macht das SPI-Repo importierbar)
-
 import torch
 
-from shadow_program_inversion.priors.differentiable_prior import DifferentiablePrior
 from sequence_config import SequenceConfig, DT, DEFAULT_HORIZON_SAMPLES
 
 
-class PilotSlidingPrior(DifferentiablePrior):
+class PilotSlidingPrior:
     def __init__(self, dt: float = DT, T: int = DEFAULT_HORIZON_SAMPLES,
                  slide_dist_m: float = 15e-3, r_gt_run_m: float = 9.25e-3,
                  fz_sign: float = -1.0, eos_softness_steps: float = 2.0):

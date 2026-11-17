@@ -16,7 +16,8 @@ UR3e + interner F/T ──> phase_b_spi_data_collection ──> MCAP + Manifest
 ATI Net F/T ──────────> ati_rdt_wrench (nur passive Referenz) ─┘
                                       │
                                       v
-data_conversion/export_rosbags.py ──> native Runs / Datensatz (Erzeugung von verwertbaren MAessreihen))
+data_conversion/extract_native.py ──> native Runs
+data_conversion/analyze_export.py ──> HDF5-Datensatz
                                       │
                                       v
 spi/  ──> Qualitätsmodell + Trajektorienmodell ──> Refit ──> Inversion
@@ -35,9 +36,7 @@ Bewegungsfreier ROS-Preflight:
 source /opt/ros/jazzy/setup.bash
 source ~/hairpin_ws/install/setup.bash
 ros2 run hairpin_skills phase_b_spi_data_collection --ros-args \
-  --params-file ~/hairpin_ws/src/hairpin_skills/config/phase_b_spi_data_collection.yaml \
-  -p manifest_schema_path:=$HOME/hairpin_ws/src/hairpin_skills/schemas/run_manifest.schema.json \
-  -p ground_truth_file:=$HOME/hairpin_ws/src/hairpin_skills/examples/rgt_caliper_v1.json
+  --params-file ~/hairpin_ws/src/hairpin_skills/config/phase_b_spi_data_collection.yaml
 ```
 
 Die mitgelieferte Konfiguration setzt `collection_dry_run: true` und
@@ -57,7 +56,7 @@ python -m unittest discover -s spi -p 'test_*.py'
 
 | Datei | Zweck |
 | --- | --- |
-| `hairpin_skills/radial_sliding_test.py` | validierter Sliding-Basisskill |
+| `hairpin_skills/radial_sliding_test.py` | interne Basisklasse des Collectors, kein eigener Abschluss-Entry-Point |
 | `hairpin_skills/phase_b_spi_data_collection.py` | finaler Collector mit Gates, Events, Rosbag und Manifest |
 | `hairpin_skills/ati_rdt_wrench.py` | passiver ATI-RDT-Empfänger |
 | `launch/ur3e_bringup.launch.py` | UR3e-Treiber und Prozessframes |
@@ -73,4 +72,3 @@ Pilotläufe). Die Inversion suchte innerhalb von 1–5 N und 1–10 mm/s über 2
 Gewichtspaare und drei feste Startpunkte, also 60 Optimierungen mit je 120
 Adam-Schritten. Die real ausgewertete Endvalidierung umfasst 40 vollständige
 Läufe.
-

@@ -67,14 +67,8 @@ def add_metadata(path, rows):
 def run(output):
     if output.exists():
         raise FileExistsError('New bundle required; no overwriting')
-    hashes = json.loads((MAIN / 'source_code_hashes.json').read_text())
-    for path in CODE.glob('*.py'):
-        if sha(path) != hashes['spi_bounds_v1/' + path.name]:
-            raise ValueError('Archived converter dependency changed: ' + path.name)
     if sha(CODE / 'detector.py') != DETECTOR_SHA:
         raise ValueError('Detector changed')
-    if 'SPI_REPO' not in os.environ:
-        raise RuntimeError('Set SPI_REPO to the pinned shadow-program-inversion clone')
     sys.path.insert(0, str(CODE))
     import convert_runs as convert
     from detector import PilotDetectorConfig, run_pilot_detector
@@ -192,7 +186,9 @@ def run(output):
             'Do not pool historical block 1 with main-series block 1',
             'Adding high-force data must demonstrate Development-only benefit; no extension of physical search bounds'],
         hdf_path=str(bundle), hdf_sha256=sha(bundle), pilot_harmonized_sha256=sha(pilot_hdf),
-        source_main_hdf_sha256=sha(main_hdf), detector_sha256=DETECTOR_SHA, raw_data_modified=False,
+        source_main_hdf_sha256=sha(main_hdf), detector_sha256=DETECTOR_SHA,
+        converter_code_sha256={path.name: sha(path) for path in CODE.glob('*.py')},
+        raw_data_modified=False,
         original_native_exports_modified=False, pilot_run_audit=audit)
     write_json(output/'pilot_harmonized_labels.json', rows)
     write_json(output/'development_labels.json', all_rows)

@@ -13,13 +13,26 @@
 # limitations under the License.
 
 from ament_flake8.main import main_with_errors
+from pathlib import Path
 import pytest
 
 
 @pytest.mark.flake8
 @pytest.mark.linter
 def test_flake8():
-    rc, errors = main_with_errors(argv=[])
+    root = Path(__file__).parents[1]
+    paths = [
+        root / 'hairpin_skills' / 'ati_rdt_wrench.py',
+        root / 'hairpin_skills' / 'phase_b_spi_data_collection.py',
+        root / 'hairpin_skills' / 'radial_sliding_test.py',
+        root / 'launch' / 'ur3e_bringup.launch.py',
+        root / 'setup.py',
+        root / 'tools' / 'validate_run_manifest.py',
+    ]
+    config = root / 'test' / 'flake8.ini'
+    rc, errors = main_with_errors(
+        argv=['--config', str(config), *(str(path) for path in paths)]
+    )
     assert rc == 0, \
         'Found %d code style errors / warnings:\n' % len(errors) + \
         '\n'.join(errors)

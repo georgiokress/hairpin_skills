@@ -25,17 +25,17 @@ from __future__ import annotations
 
 import math
 import os
+from pathlib import Path
 import signal
 import subprocess
 import time
-from pathlib import Path
 from typing import Optional, Sequence
 
-import rclpy
 from builtin_interfaces.msg import Duration
 from control_msgs.action import FollowJointTrajectory
 from controller_manager_msgs.srv import ListControllers, SwitchController
 from geometry_msgs.msg import TransformStamped, WrenchStamped
+import rclpy
 from rclpy.action import ActionClient
 from rclpy.node import Node
 from rclpy.qos import qos_profile_sensor_data
@@ -154,7 +154,15 @@ class RadialSlidingNode(Node):
         # Bag
         self.declare_parameter(
             "bag_root",
-            str(Path.home() / "masterarbeit" / "bags"),
+            str(
+                Path(
+                    os.environ.get(
+                        "HAIRPIN_DATA_ROOT",
+                        str(Path.home() / "hairpin_data"),
+                    )
+                )
+                / "bags"
+            ),
         )
         self.declare_parameter("bag_name", "radial_sliding_01")
         self.declare_parameter("bag_start_wait_s", 2.0)

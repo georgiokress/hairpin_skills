@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Phase B data collection for SPI with internal UR force control.
+"""
+Phase B data collection for SPI with internal UR force control.
 
 This executable extends the validated 15 mm radial sliding implementation with
 immutable metadata, structured events and passive ATI recording. It contains no
@@ -9,24 +10,25 @@ chamfer-triggered stop path. The physical motion always targets the validated
 
 from __future__ import annotations
 
+from collections import deque
+from datetime import datetime, timezone
 import hashlib
 import json
 import math
+import os
+from pathlib import Path
 import re
 import subprocess
 import time
-from collections import deque
-from datetime import datetime, timezone
-from pathlib import Path
 from typing import Any, Optional
 
+from ament_index_python.packages import get_package_share_directory
+from geometry_msgs.msg import WrenchStamped
+from hairpin_skills.radial_sliding_test import RadialSlidingNode
 import rclpy
 from rclpy.time import Time
-from geometry_msgs.msg import WrenchStamped
 from std_msgs.msg import String
 from tf2_ros import TransformException
-
-from hairpin_skills.radial_sliding_test import RadialSlidingNode
 
 
 RUN_ID_PATTERN = re.compile(
@@ -74,6 +76,7 @@ class PhaseBSPIDataCollectionNode(RadialSlidingNode):
         # executable and event topic distinguish this acquisition route without
         # modifying the already validated base class.
         super().__init__()
+        package_share = Path(get_package_share_directory("hairpin_skills"))
 
         self.declare_parameter("experiment_id", "pb_spi_s4_qualification_v1")
         self.declare_parameter("purpose", "qualification")
@@ -97,23 +100,26 @@ class PhaseBSPIDataCollectionNode(RadialSlidingNode):
         self.declare_parameter("internal_signal_min_peak_abs_n", 1.0e-6)
         self.declare_parameter(
             "ground_truth_file",
-            "/home/georgio/masterarbeit/results/phase_b_spi/ground_truth/"
-            "rgt_caliper_v1.json",
+            str(package_share / "examples" / "rgt_caliper_v1.json"),
         )
         self.declare_parameter(
             "collection_config_path",
-            "/home/georgio/hairpin_ws/src/hairpin_skills/config/"
-            "phase_b_spi_data_collection.yaml",
+            str(package_share / "config" / "phase_b_spi_data_collection.yaml"),
         )
         self.declare_parameter(
             "manifest_schema_path",
-            "/home/georgio/masterarbeit/config/phase_b_spi/"
-            "run_manifest.schema.json",
+            str(package_share / "schemas" / "run_manifest.schema.json"),
         )
         self.declare_parameter(
             "bag_qos_overrides_path",
-            "/home/georgio/hairpin_ws/src/hairpin_skills/config/"
-            "rosbag_qos_overrides.yaml",
+            str(package_share / "config" / "rosbag_qos_overrides.yaml"),
+        )
+        self.declare_parameter(
+            "repository_path",
+            os.environ.get(
+                "HAIRPIN_REPOSITORY_PATH",
+                str(Path(__file__).resolve().parents[1]),
+            ),
         )
 
         self.event_publisher = self.create_publisher(
@@ -335,7 +341,7 @@ class PhaseBSPIDataCollectionNode(RadialSlidingNode):
         while time.monotonic() < transform_deadline:
             rclpy.spin_once(self, timeout_sec=0.02)
             try:
-                transform = self.tf_buffer.lookup_transform(
+                self.tf_buffer.lookup_transform(
                     str(self.p("sliding_frame")),
                     "tool0_controller",
                     Time(),
@@ -640,7 +646,7 @@ class PhaseBSPIDataCollectionNode(RadialSlidingNode):
         return json.loads(path.read_text(encoding="utf-8")), path
 
     def git_state(self) -> tuple[Optional[str], bool]:
-        root = Path("/home/georgio/hairpin_ws")
+        root = Path(str(self.p("repository_path"))).expanduser().resolve()
         commit_result = subprocess.run(
             ["git", "-C", str(root), "rev-parse", "HEAD"],
             text=True,

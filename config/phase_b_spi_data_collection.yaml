@@ -107,11 +107,7 @@
     manual_reference_frozen: false
     parameter_bounds_version: ""
 
-    bag_root: /home/georgio/masterarbeit/bags/phase_b_spi/qualification
     bag_name: pb_spi_s4_setznest2_intctrl_atipass_d015_v0040_fn020_qualification_r001
     bag_start_wait_s: 3.0
-    bag_qos_overrides_path: /home/georgio/hairpin_ws/src/hairpin_skills/config/rosbag_qos_overrides.yaml
-
-    ground_truth_file: /home/georgio/masterarbeit/results/phase_b_spi/ground_truth/rgt_caliper_v1.json
-    collection_config_path: /home/georgio/hairpin_ws/src/hairpin_skills/config/phase_b_spi_data_collection.yaml
-    manifest_schema_path: /home/georgio/masterarbeit/config/phase_b_spi/run_manifest.schema.json
+    # bag_root and all package resource paths use portable defaults. Override
+    # bag_root or set HAIRPIN_DATA_ROOT for an approved acquisition host.

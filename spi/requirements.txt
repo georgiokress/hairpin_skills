@@ -3,4 +3,3 @@ scipy==1.17.1
 tables==3.11.1
 torch==2.13.0
 matplotlib==3.11.1
-natsort==8.4.0

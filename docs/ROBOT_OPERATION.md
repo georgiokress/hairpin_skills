@@ -66,7 +66,6 @@ ros2 launch hairpin_skills ur3e_bringup.launch.py \
   robot_ip:=192.168.214.203 \
   reverse_ip:=192.168.214.204 \
   headless_mode:=false \
-  external_ft_rtde_input_enabled:=false \
   launch_rviz:=false
 ```
 
@@ -74,8 +73,8 @@ Wichtige Eigenschaften dieses Aufrufs:
 
 - `headless_mode:=false`: Das Pendant-Programm wird nicht automatisch
   gestartet.
-- `external_ft_rtde_input_enabled:=false`: Die finale Datenaufnahme verwendet
-  den internen UR-Sensor für die Kraftregelung.
+- Der finale Bring-up enthält keine externe F/T-RTDE-Aktivierung. Die
+  Kraftregelung verwendet ausschließlich den internen UR-Sensor.
 - Der Bring-up lädt den Treiber, die Controller, die Kalibrierung und die
   statischen Frames. Er erteilt selbst keinen Trajektorienauftrag.
 
@@ -114,9 +113,7 @@ freigeschaltet:
 
 ```bash
 ros2 run hairpin_skills phase_b_spi_data_collection --ros-args \
-  --params-file ~/hairpin_ws/src/hairpin_skills/config/phase_b_spi_data_collection.yaml \
-  -p manifest_schema_path:=$HOME/hairpin_ws/src/hairpin_skills/schemas/run_manifest.schema.json \
-  -p ground_truth_file:=$HOME/hairpin_ws/src/hairpin_skills/examples/rgt_caliper_v1.json
+  --params-file ~/hairpin_ws/src/hairpin_skills/config/phase_b_spi_data_collection.yaml
 ```
 
 Der Preflight prüft unter anderem:
@@ -141,7 +138,11 @@ Mindestens folgende Felder müssen untereinander konsistent sein:
 - `radial_speed_mps` und das zugehörige `v....`-Token der Run-ID;
 - `normal_force_n` (negatives ROS-Kommando) und das zugehörige `fn...`-Token;
 - `purpose`, `planned_split`, `repetition_index`, `planned_order_index`;
-- `ground_truth_file`, `manifest_schema_path`, `collection_config_path`;
+- `ground_truth_file`, `manifest_schema_path` und `repository_path` verwenden
+  normalerweise die installierten beziehungsweise aus dem Paket ermittelten
+  Standardwerte;
+- `collection_config_path` zeigt bei einem realen Lauf auf genau dessen
+  unveränderliche YAML-Datei;
 - `collection_dry_run: true` und `run_authorized: false` bleiben in der
   gespeicherten Datei geschlossen.
 

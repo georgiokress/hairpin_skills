@@ -48,7 +48,8 @@ def validate_cross_fields(manifest: dict) -> list[str]:
     split = manifest["doe"]["planned_split"]
     if purpose.startswith("validation_") and split != "validation":
         errors.append("validation purpose requires planned_split='validation'")
-    if purpose in {"qualification", "reference_training", "doe_training"} and split == "validation":
+    training_purposes = {"qualification", "reference_training", "doe_training"}
+    if purpose in training_purposes and split == "validation":
         errors.append(f"purpose {purpose!r} must not use validation split")
 
     outcome = manifest["outcome"]

@@ -12,9 +12,6 @@ python3 -m venv .venv-spi
 source .venv-spi/bin/activate
 python -m pip install --upgrade pip
 python -m pip install -r spi/requirements.txt
-mkdir -p external
-vcs import external < spi_dependencies.repos
-export SPI_REPO=$PWD/external/shadow-program-inversion
 ```
 
 Der dokumentierte Abschlussstand verwendete Python 3.11 sowie NumPy 2.4.6,
@@ -63,7 +60,6 @@ Fold-Mitgliedschaften:
 
 ```bash
 source .venv-spi/bin/activate
-export SPI_REPO=$PWD/external/shadow-program-inversion
 export HAIRPIN_MAIN_BAG_ROOT=/PFAD/ZU/bags/phase_b_spi/main_doe_v1
 python data_conversion/analyze_export.py /PFAD/ZUM/NEUEN/EXPORTORDNER
 ```
@@ -96,7 +92,6 @@ eingefrorenen Haupt- und Pilotexport erstellt:
 ```bash
 export HAIRPIN_DATASET_ROOT=/ABSOLUTER/PFAD/datasets/phase_b_spi
 export HAIRPIN_PILOT_ANNOTATIONS=/PFAD/ZU/pilot_doe_v0/operator_annotations
-export SPI_REPO=$PWD/external/shadow-program-inversion
 python spi/include_pilot.py \
   "$HAIRPIN_DATASET_ROOT/development_main90_pilot27_v1"
 ```

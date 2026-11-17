@@ -12,9 +12,9 @@ Ergebnisse:
 ~/masterarbeit/config/phase_b_spi/     Run-Pläne und Run-Konfigurationen
 ```
 
-Die absoluten Pfade in der ROS-YAML dokumentieren den verwendeten Rechner und
-sind auf einem anderen System als ROS-Parameter zu ersetzen. Die Offline-SPI-
-Skripte verwenden stattdessen `HAIRPIN_DATASET_ROOT` und
+Paketressourcen werden installationsrelativ gefunden. Der Rohdatenstamm kann
+mit `HAIRPIN_DATA_ROOT` beziehungsweise dem ROS-Parameter `bag_root` gewählt
+werden. Die Offline-SPI-Skripte verwenden `HAIRPIN_DATASET_ROOT` und
 `HAIRPIN_RESULTS_ROOT`; siehe `SPI_WORKFLOW.md`.
 
 ## Inhalt eines Rohdaten-Runs
@@ -105,4 +105,3 @@ Zusätzlich zu Schema und Hashes müssen geprüft werden:
 - interner und passiver ATI-Wrench bleiben getrennt;
 - Tare- und Baselinefenster sind vorhanden;
 - Manifest, Konfiguration und tatsächlich verwendete Parameter stimmen überein.
-

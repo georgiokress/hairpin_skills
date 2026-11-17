@@ -10,20 +10,17 @@ log/
 *.bag
 *.sqlite3
 
-*.png
-*.csv
-*.json
-
-# Kleine, versionierte Reproduzierbarkeitsartefakte trotz JSON-Regel
-!schemas/
-!schemas/*.json
-!examples/
-!examples/*.json
+# Large and generated research artifacts are archived outside Git.
+/bags/
+/datasets/
+/results/
+/external/
+/.venv-spi/
 
 .DS_Store
 .env
 
-# Lokale Arbeitsanweisungen und historische Sicherungskopien
+# Local instructions and historical backups
 AGENTS.md
 *.backup
 *_backup.py

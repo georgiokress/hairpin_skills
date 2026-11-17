@@ -6,8 +6,7 @@ Dieser zusätzliche Exporter ändert weder Controller noch Detektor, Rohbags ode
 
 1. System-Python 3.12 mit ROS Jazzy: `extract_native.py INVENTORY NEW_OUTPUT_DIR` nach Laden von `/opt/ros/jazzy/setup.bash`.
 2. Dieselbe ROS-Umgebung: `reconcile_native.py NEW_OUTPUT_DIR`. Fehlende ergänzende Kontexte können nur bei vollständigen Messserien und exakt belegbarer Planzuordnung aufgelöst werden. Ursprüngliche Ausschluss-/Exportregister werden erhalten.
-3. Aktivierte SPI-Venv: `analyze_export.py NEW_OUTPUT_DIR`, mit `SPI_REPO` auf
-   den durch `spi_dependencies.repos` gepinnten Clone setzen.
+3. In der aktivierten SPI-Venv: `analyze_export.py NEW_OUTPUT_DIR`.
 
 Die historischen absoluten Pfade wurden für die Übergabe durch Umgebungsvariablen
 ersetzt: `HAIRPIN_MAIN_CONFIG_ROOT`, `HAIRPIN_MAIN_RESULTS_ROOT`,

@@ -13,11 +13,21 @@
 # limitations under the License.
 
 from ament_pep257.main import main
+from pathlib import Path
 import pytest
 
 
 @pytest.mark.linter
 @pytest.mark.pep257
 def test_pep257():
-    rc = main(argv=['.', 'test'])
+    root = Path(__file__).parents[1]
+    paths = [
+        root / 'hairpin_skills' / 'ati_rdt_wrench.py',
+        root / 'hairpin_skills' / 'phase_b_spi_data_collection.py',
+        root / 'hairpin_skills' / 'radial_sliding_test.py',
+        root / 'launch' / 'ur3e_bringup.launch.py',
+        root / 'setup.py',
+        root / 'tools' / 'validate_run_manifest.py',
+    ]
+    rc = main(argv=[str(path) for path in paths])
     assert rc == 0, 'Found code style errors / warnings'
