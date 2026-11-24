@@ -72,3 +72,15 @@ Pilotläufe). Die Inversion suchte innerhalb von 1–5 N und 1–10 mm/s über 2
 Gewichtspaare und drei feste Startpunkte, also 60 Optimierungen mit je 120
 Adam-Schritten. Die real ausgewertete Endvalidierung umfasst 40 vollständige
 Läufe.
+
+## Abgrenzung zur ursprünglichen SPI
+
+Die Implementierung übernimmt den methodischen SPI-Kern: Ein differenzierbarer
+Prior und ein gelerntes Residualmodell bilden den Prozess ab; bei der Inversion
+werden die Modellgewichte eingefroren und nur die Skillparameter optimiert. Im
+Unterschied zur [ursprünglichen SPI](https://github.com/benjaminalt/shadow-program-inversion)
+ist diese Variante auf Hairpin-Sliding mit Geschwindigkeit und Normalkraft
+spezialisiert. Analytischer Sliding-Prior, separater Ortsfehler-Ausgang,
+Soft-Endpoint und Mehrzielinversion sind anwendungsspezifische Erweiterungen.
+Die Methode ist daher als **domänenspezifische SPI-Adaption mit methodischen
+Erweiterungen** einzuordnen.
