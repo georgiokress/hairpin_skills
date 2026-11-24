@@ -27,30 +27,9 @@ source /opt/ros/jazzy/setup.bash
 source ~/hairpin_ws/install/setup.bash
 ```
 
-## 3. Passiven ATI-Datenstrom starten
+## 3. UR-Treiber starten
 
 Terminal 1:
-
-```bash
-ros2 run hairpin_skills ati_rdt_wrench --ros-args \
-  -p standalone_mode_confirmed:=true \
-  -p topic:=/ati/wrench_passive
-```
-
-Dieser Node bewegt den Roboter nicht. `standalone_mode_confirmed:=true` darf
-nur gesetzt werden, wenn der ATI-URCap-Daemon tatsächlich gestoppt ist. Der
-erwartete Frame ist `ati_ur_aligned`.
-
-Lesende Prüfung in einem weiteren Terminal:
-
-```bash
-ros2 topic echo --once /ati/wrench_passive
-ros2 topic hz /ati/wrench_passive
-```
-
-## 4. UR-Treiber starten
-
-Terminal 2:
 
 ```bash
 ros2 launch hairpin_skills ur3e_bringup.launch.py \
@@ -71,6 +50,28 @@ Wichtige Eigenschaften dieses Aufrufs:
 
 Erst nach erfolgreichem Treiberstart startet die Bedienperson das
 External-Control-Programm am Pendant.
+
+## 4. Passiven ATI-Datenstrom starten
+
+Terminal 2:
+
+```bash
+ros2 run hairpin_skills ati_rdt_wrench --ros-args \
+  -p standalone_mode_confirmed:=true \
+  -p topic:=/ati/wrench_passive
+```
+
+Dieser Node bewegt den Roboter nicht. `standalone_mode_confirmed:=true` darf
+nur gesetzt werden, wenn der ATI-URCap-Daemon tatsächlich gestoppt ist. Der
+erwartete Frame ist `ati_ur_aligned`.
+
+Lesende Prüfung in einem weiteren Terminal:
+
+```bash
+ros2 topic echo --once /ati/wrench_passive
+ros2 topic hz /ati/wrench_passive
+```
+
 
 ## 5. Bereitschaft lesend prüfen
 
